@@ -27,9 +27,9 @@ public class DbWorker implements DbWorkerItf {
         final String user = "root";
         final String password = "emf123";
 
-        System.out.println("url:" + url_remote);
+        System.out.println("url:" + url_local);
         try {
-            dbConnexion = DriverManager.getConnection(url_remote, user, password);
+            dbConnexion = DriverManager.getConnection(url_local, user, password);
         } catch (SQLException ex) {
             throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
@@ -71,22 +71,51 @@ public class DbWorker implements DbWorkerItf {
     }
 
     public List<Personne> lirePersonnes() throws MyDBException {
-        listePersonnes = new ArrayList<>();
-        
+        listePersonnes = new ArrayList<Personne>();
+        try {
+            Statement st = dbConnexion.createStatement();
+            ResultSet rs = st.executeQuery("select PK_PERS, Prenom, Nom from t_personne");
+
+            while (rs.next()) {
+                Personne per = new Personne(rs.getString("Nom"), rs.getString("Prenom"));
+                listePersonnes.add(per);
+            }
+        } catch (SQLException ex) {
+
+        }
+
         return listePersonnes;
     }
 
     @Override
     public Personne precedentPersonne() throws MyDBException {
+        Personne p = new Personne();
+        if (listePersonnes == null) {
+            lirePersonnes();
+            p = listePersonnes.get(index);
+        }
 
-        return null;
+        if (index > 0) {
+           
+            index --;
+        }
+         p = listePersonnes.get(index);
+        return p;
 
     }
 
     @Override
     public Personne suivantPersonne() throws MyDBException {
-
-        return null;
+       
+        if (listePersonnes == null) {
+            lirePersonnes();
+           
+        }
+        if (index < listePersonnes.size()-1 && (listePersonnes.get(index) != null)) {
+            index++;
+        }
+        
+        return listePersonnes.get(index);
 
     }
 
