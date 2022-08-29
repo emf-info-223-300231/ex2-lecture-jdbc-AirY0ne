@@ -109,7 +109,7 @@ public class DbWorker implements DbWorkerItf {
        
         if (listePersonnes == null) {
             lirePersonnes();
-           
+           listePersonnes.get(index);
         }
         if (index < listePersonnes.size()-1 && (listePersonnes.get(index) != null)) {
             index++;
