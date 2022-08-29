@@ -24,12 +24,12 @@ public class DbWorker implements DbWorkerItf {
     public void connecterBdMySQL(String nomDB) throws MyDBException {
         final String url_local = "jdbc:mysql://localhost:3306/" + nomDB;
         final String url_remote = "jdbc:mysql://LAPEMFB37-21.edu.net.fr.ch:3306/" + nomDB;
-        final String user = "root";
+        final String user = "223";
         final String password = "emf123";
 
-        System.out.println("url:" + url_local);
+        System.out.println("url:" + url_remote);
         try {
-            dbConnexion = DriverManager.getConnection(url_local, user, password);
+            dbConnexion = DriverManager.getConnection(url_remote, user, password);
         } catch (SQLException ex) {
             throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }

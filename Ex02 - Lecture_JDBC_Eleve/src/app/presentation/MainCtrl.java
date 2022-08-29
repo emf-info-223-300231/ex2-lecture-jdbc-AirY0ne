@@ -26,7 +26,7 @@ public class MainCtrl implements Initializable {
   };
 
   // DB par défaut
-  final static private TypesDB DB_TYPE = TypesDB.ACCESS;
+  final static private TypesDB DB_TYPE = TypesDB.MYSQL;
 
   private DbWorkerItf dbWrk;
 
