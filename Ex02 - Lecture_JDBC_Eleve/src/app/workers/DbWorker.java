@@ -39,7 +39,7 @@ public class DbWorker implements DbWorkerItf {
     public void connecterBdHSQLDB(String nomDB) throws MyDBException {
         final String url = "jdbc:hsqldb:file:" + nomDB + ";shutdown=true";
         final String user = "SA";
-        final String password = "";
+        final String password = ""; 
         System.out.println("url:" + url);
         try {
             dbConnexion = DriverManager.getConnection(url, user, password);
@@ -81,7 +81,7 @@ public class DbWorker implements DbWorkerItf {
                 listePersonnes.add(per);
             }
         } catch (SQLException ex) {
-
+            throw new MyDBException(SystemLib.getFullMethodName(), ex.getMessage());
         }
 
         return listePersonnes;
